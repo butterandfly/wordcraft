@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    
+    <!-- PWA & Apple Web App Meta Tags -->
+    <meta name="theme-color" content="#4A7C96" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="WordCraft" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    
+    <title>WordCraft 语块工坊 | 阶梯式语文写作 PWA</title>
+    
+    <!-- Optimize Typography & Touch -->
+    <style>
+      /* iPad touch & scrolling optimizations */
+      * {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #F8FAF9;
+        color: #1F3847;
+        overflow-x: hidden;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      /* Allow text selection in inputs and reading text */
+      input, textarea, [data-selectable="true"] {
+        user-select: text;
+        -webkit-user-select: text;
+      }
+    </style>
+  </head>
+  <body class="bg-canvas min-h-screen font-sans antialiased selection:bg-slatebrand-200 selection:text-slatebrand-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
