@@ -3,12 +3,20 @@ import { TaskStepId } from '../types';
 import { Check, Lock, Layers, Sparkles, FileText, PenTool, ArrowLeft, RotateCcw, AlertCircle } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 
+export interface CustomStepConfig {
+  id: TaskStepId;
+  stepNumber: number;
+  title: string;
+  icon: React.ReactNode;
+}
+
 interface TaskTodoListProps {
   currentStep: TaskStepId;
   completedSteps: TaskStepId[];
   onSelectStep: (stepId: TaskStepId) => void;
   onBackToTasks: () => void;
   onResetTask: () => void;
+  customSteps?: CustomStepConfig[];
 }
 
 export const TaskTodoList: React.FC<TaskTodoListProps> = ({
@@ -16,16 +24,12 @@ export const TaskTodoList: React.FC<TaskTodoListProps> = ({
   completedSteps,
   onSelectStep,
   onBackToTasks,
-  onResetTask
+  onResetTask,
+  customSteps
 }) => {
   const [showConfirmReset, setShowConfirmReset] = useState<boolean>(false);
 
-  const steps: {
-    id: TaskStepId;
-    stepNumber: number;
-    title: string;
-    icon: React.ReactNode;
-  }[] = [
+  const defaultSteps: CustomStepConfig[] = [
     {
       id: 'step1_basic',
       stepNumber: 1,
@@ -51,6 +55,8 @@ export const TaskTodoList: React.FC<TaskTodoListProps> = ({
       icon: <PenTool className="w-3.5 h-3.5" />
     }
   ];
+
+  const steps = customSteps || defaultSteps;
 
   // Helper to check if step is unlocked
   const isStepUnlocked = (index: number): boolean => {
@@ -185,7 +191,7 @@ export const TaskTodoList: React.FC<TaskTodoListProps> = ({
                 确定要重新开始这个任务吗？
               </h4>
               <p className="text-xs text-slatebrand-500 mt-1">
-                已选择的基础要素、修饰语和编写的句子将被清空，需重新回答问题。
+                已填写的插槽内容将被清空，需重新回答问题。
               </p>
             </div>
 

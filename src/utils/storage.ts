@@ -1,10 +1,13 @@
-import { TaskProgress, TaskStepId } from '../types';
+import { TaskProgress, ExpansionProgress } from '../types';
 
 const STORAGE_KEY_PROGRESS = 'wordcraft_tasks_progress_v2';
+const STORAGE_KEY_EXPANSION_PROGRESS = 'wordcraft_expansion_progress_v1';
 const STORAGE_KEY_SOUND = 'wordcraft_sound_enabled';
 
 export class TaskStorageManager {
-  // Get all task progresses
+  // ----------------------------------------------------
+  // 看图写句子 进度管理
+  // ----------------------------------------------------
   public static getAllProgress(): Record<string, TaskProgress> {
     try {
       const raw = localStorage.getItem(STORAGE_KEY_PROGRESS);
@@ -14,7 +17,6 @@ export class TaskStorageManager {
     }
   }
 
-  // Get progress for a single task
   public static getTaskProgress(taskId: string): TaskProgress {
     const all = this.getAllProgress();
     if (all[taskId]) {
@@ -31,7 +33,6 @@ export class TaskStorageManager {
     };
   }
 
-  // Save/Update progress for a single task
   public static saveTaskProgress(progress: TaskProgress): void {
     try {
       const all = this.getAllProgress();
@@ -45,36 +46,49 @@ export class TaskStorageManager {
     }
   }
 
-  // Mark a step as completed
-  public static markStepCompleted(taskId: string, stepId: TaskStepId, data?: Partial<TaskProgress>): TaskProgress {
-    const progress = this.getTaskProgress(taskId);
-    if (!progress.completedSteps.includes(stepId)) {
-      progress.completedSteps.push(stepId);
+  // ----------------------------------------------------
+  // 扩写句子 进度管理
+  // ----------------------------------------------------
+  public static getAllExpansionProgress(): Record<string, ExpansionProgress> {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_EXPANSION_PROGRESS);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
     }
-    if (stepId === 'step4_handwrite') {
-      progress.step4Confirmed = true;
-      progress.step4ConfirmedAt = Date.now();
-    }
-    if (data) {
-      Object.assign(progress, data);
-    }
-    this.saveTaskProgress(progress);
-    return progress;
   }
 
-  // Unmark a step
-  public static unmarkStep(taskId: string, stepId: TaskStepId): TaskProgress {
-    const progress = this.getTaskProgress(taskId);
-    progress.completedSteps = progress.completedSteps.filter((s) => s !== stepId);
-    if (stepId === 'step4_handwrite') {
-      progress.step4Confirmed = false;
-      delete progress.step4ConfirmedAt;
+  public static getExpansionProgress(taskId: string): ExpansionProgress {
+    const all = this.getAllExpansionProgress();
+    if (all[taskId]) {
+      return all[taskId];
     }
-    this.saveTaskProgress(progress);
-    return progress;
+    return {
+      taskId,
+      completedSteps: [],
+      slotAnswers: {},
+      finalSentence: '',
+      isConfirmed: false,
+      lastUpdated: Date.now()
+    };
   }
 
-  // Get sound settings
+  public static saveExpansionProgress(progress: ExpansionProgress): void {
+    try {
+      const all = this.getAllExpansionProgress();
+      all[progress.taskId] = {
+        ...progress,
+        lastUpdated: Date.now()
+      };
+      localStorage.setItem(STORAGE_KEY_EXPANSION_PROGRESS, JSON.stringify(all));
+    } catch (e) {
+      console.error('Failed to save expansion task progress', e);
+    }
+  }
+
+  // ----------------------------------------------------
+  // 音效设置
+  // ----------------------------------------------------
   public static getSoundEnabled(): boolean {
     try {
       const raw = localStorage.getItem(STORAGE_KEY_SOUND);

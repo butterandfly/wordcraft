@@ -2,13 +2,8 @@ import React from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 
 interface HeaderProps {
-  currentView: 'modules' | 'task_list' | 'task_workspace';
-  activeTaskTitle?: string;
-  onBack: () => void;
   soundEnabled: boolean;
   onToggleSound: () => void;
-  completedTasksCount: number;
-  totalTasksCount: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,7 +11,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleSound
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-paper/95 backdrop-blur-md border-b border-slatebrand-100 px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 transition-all">
+    <header className="sticky top-0 z-30 bg-paper/95 backdrop-blur-md border-b border-slatebrand-100 px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Left: Brand & Subtitle */}
         <div className="flex items-center gap-3 sm:gap-3.5">
@@ -27,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
             <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slatebrand-900 tracking-tight leading-none">
               WordCraft
             </h1>
-            <p className="text-xs sm:text-xs text-slatebrand-500 font-medium tracking-normal mt-1">
+            <p className="text-xs text-slatebrand-500 font-medium tracking-normal mt-1">
               小学生写作交互式练习
             </p>
           </div>

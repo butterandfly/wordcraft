@@ -4,11 +4,20 @@ export const LEARNING_MODULES: LearningModule[] = [
   {
     id: 'module-sentence',
     title: '看图写句子',
-    shortDesc: '一图一任务 · 4步 To-Do 进阶，从骨架到完整句子与纸上默写',
+    shortDesc: '视觉观察 · 4步递进，从骨架到修饰与纸上默写',
     iconName: 'Image',
     status: 'active',
     stageGrade: '小学 4-6 年级',
-    totalTasks: 1
+    totalTasks: 3
+  },
+  {
+    id: 'module-expansion',
+    title: '扩写句子',
+    shortDesc: '纯文字骨干出发 · 逐个插槽拉伸扩展 · 默写还原长句',
+    iconName: 'Sparkles',
+    status: 'active',
+    stageGrade: '小学 4-6 年级',
+    totalTasks: 3
   },
   {
     id: 'module-paragraph',
@@ -24,15 +33,6 @@ export const LEARNING_MODULES: LearningModule[] = [
     title: '看图成篇 · 作文工坊',
     shortDesc: '起承转合、三段式思维导图与完整篇章构建（即将开放）',
     iconName: 'BookOpenCheck',
-    status: 'upcoming',
-    stageGrade: '小学 4-6 年级',
-    totalTasks: 0
-  },
-  {
-    id: 'module-social',
-    title: '情境社交表达',
-    shortDesc: '视角转换、心智理论与情境对话表达（即将开放）',
-    iconName: 'Users',
     status: 'upcoming',
     stageGrade: '小学 4-6 年级',
     totalTasks: 0
